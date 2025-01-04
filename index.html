@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+ 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+html, body{
+    height: 100%;
+}
+
+
+body{
+    font-family: 'Montserrat', serif;
+    
+}
+ 
+main{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(3, 221, 130);
+    background: url('../assets/background_image.jpg');
+    background-color : rgb(43, 153, 107);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
+} 
+
+.game-quiz-container{
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+ 
+}
+
+.game-details-container{
+    width: 80%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.game-details-container h1{
+    font-size: 1.2rem;
+}
+
+.game-question-container{
+    width: 80%;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(8, 8, 8);
+    border-radius: 25px;
+}
+
+.game-question-container h1{
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 3px;
+}
+
+.game-options-container{
+    width: 80%;
+    height: 12rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+ span{
+    width: 400px;
+    height: 100px;
+     border: 2px solid rgb(0, 0, 0);
+    border-radius: 20px;
+
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+ 
+   }
+span label{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-weight: 600;
+    color: rgb(22, 22, 22);
+}
+
+span label:hover{
+color: #d6dfe9;
+}
+
+input[type="radio"] {
+    position: relative;
+    display: none;
+}
+
+
+input[type=radio]:checked ~ .option {
+	background: rgb(98, 158, 156);
+}
+
+.next-button-container{
+    width: 50%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+}
+.next-button-container button{
+    width: 8rem;
+    height: 2rem;
+    border-radius: 10px;
+    background: none;
+    color: rgb(248, 244, 244);
+    font-weight: 600;
+    border: 2px solid rgb(12, 12, 12);
+    cursor: pointer;
+    outline: none;
+    background-color: rgb(8, 8, 8);
+}
+.next-button-container button:hover{
+    background-color: rgb(98, 158, 156);
+}
+
+.modal-container{
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    -webkit-animation: fadeIn 1.2s ease-in-out;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.modal-content-container{
+    height: 20rem;
+    width: 25rem;
+    background-color: rgb(15, 15, 15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 25px;
+}
+
+.modal-content-container h1{
+    font-size: 1.3rem;
+    height: 3rem;
+    color: rgb(194, 111, 111);
+    text-align: center;
+}
+
+.grade-details{
+    width: 15rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.grade-details p{
+    color: white;
+    text-align: center;
+}
+
+.modal-button-container{
+    height: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-button-container button{
+    width: 10rem;
+    height: 2rem;
+    background: none;
+    outline: none;
+    border: 1px solid rgb(252, 242, 241);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.modal-button-container button:hover{
+    background-color: rgb(83, 82, 82);
+}
+
+@media(min-width : 300px) and (max-width : 350px){
+    .game-quiz-container{
+        width: 90%;
+        height: 80vh;
+     }
+     .game-details-container h1{
+        font-size: 0.8rem;
+     }
+ 
+     .game-question-container{
+        height: 6rem;
+     }
+     .game-question-container h1{
+       font-size: 0.9rem;
+    }
+ 
+    .game-options-container span{
+        width: 90%;
+        height: 2.5rem;
+    }
+    .game-options-container span label{
+        font-size: 0.8rem;
+    }
+    .modal-content-container{
+        width: 90%;
+        height: 25rem;
+    }
+    
+    .modal-content-container h1{
+        font-size: 1.2rem;
+    }
+}
+
+@media(min-width : 350px) and (max-width : 700px){
+   .game-quiz-container{
+       width: 90%;
+       height: 80vh;
+    }
+    .game-details-container h1{
+        font-size: 1rem;
+    }
+
+    .game-question-container{
+        height: 8rem;
+    }
+
+    .game-question-container h1{
+        font-size: 0.9rem;
+     }
+
+    .game-options-container span{
+        width: 90%;
+    }
+    .modal-content-container{
+        width: 90%;
+        height: 25rem;
+    }
+    .modal-content-container h1{
+        font-size: 1.2rem;
+    }
+}
+
+
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }</style>
+</head>
+
+<body onload="NextQuestion(0)">
+    <nav class="navbar navbar-expand-lg bg-light sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fa-solid fa-khanda fa-beat fa-2xl" style="color: #111;"></i></i></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5502/chess/by/index.html"><i class="fa-solid fa-house " style="color: #d6dfe9;"></i>Home</a>
+                  </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:5502/chess/hi/index.html">The Chaar Sahibzaade test </a>
+              </li>
+           
+        
+          </div>
+        </div>
+      </nav>
+    <main>
+        <!-- creating a modal for when quiz ends -->
+        <div class="modal-container" id="score-modal">
+          
+            <div class="modal-content-container">
+              
+                <h1>Congratulations, Quiz Completed.</h1>
+              
+                <div class="grade-details">
+                    <p>Attempts : 10</p>
+                    <p>Wrong Answers : <span id="wrong-answers"></span></p>
+                    <p>Right Answers : <span id="right-answers"></span></p>
+                    <p>Grade : <span id="grade-percentage"></span>%</p>
+                    <p ><span id="remarks"></span></p>
+                </div>
+              
+                <div class="modal-button-container">
+                    <button onclick="closeScoreModal()">Continue</button>
+                </div>
+              
+            </div>
+        </div>
+
+        <div class="game-quiz-container">
+          
+            <div class="game-details-container">
+                <h1>Score : <span id="player-score"></span> / 10</h1>
+                <h1> Question : <span id="question-number"></span> / 10</h1>
+            </div>
+
+            <div class="game-question-container">
+                <h1 id="display-question"></h1>
+            </div>
+
+            <div class="game-options-container">
+              
+               <div class="modal-container" id="option-modal">
+                 
+                    <div class="modal-content-container">
+                         <h1>Please Pick An Option</h1>
+                      
+                         <div class="modal-button-container">
+                            <button onclick="closeOptionModal()">Continue</button>
+                        </div>
+                      
+                    </div>
+                 
+               </div>
+              
+                <span>
+                    <input type="radio" id="option-one" name="option" class="radio" value="optionA" />
+                    <label for="option-one" class="option" id="option-one-label"></label>
+                </span>
+              
+
+                <span>
+                    <input type="radio" id="option-two" name="option" class="radio" value="optionB" />
+                    <label for="option-two" class="option" id="option-two-label"></label>
+                </span>
+              
+
+                <span>
+                    <input type="radio" id="option-three" name="option" class="radio" value="optionC" />
+                    <label for="option-three" class="option" id="option-three-label"></label>
+                </span>
+              
+
+                <span>
+                    <input type="radio" id="option-four" name="option" class="radio" value="optionD" />
+                    <label for="option-four" class="option" id="option-four-label"></label>
+                </span>
+
+
+            </div>
+
+            <div class="next-button-container">
+                <button onclick="handleNextQuestion()">Next Question</button>
+            </div>
+           
+        </div>
+    </main>
+    <script>
+
+const questions = [
+{
+    question: "Who were the Chaar Sahibzade?",
+    optionA: "Sons of Guru Arjan Dev Ji",
+    optionB: "Sons of Guru Gobind Singh Ji",
+    optionC: "Soldiers in Guru Hargobind Ji’s army",
+    optionD: "Generals in the Mughal army",
+    correctOption: "optionB"
+},
+{
+    question: "What does the term 'Sahibzade' mean?",
+    optionA: "Warriors",
+    optionB: "Saints",
+    optionC: "Sons of the Guru",
+    optionD: "Kings",
+    correctOption: "optionC"
+},
+{
+    question: "How many Sahibzade were martyred at Chamkaur Sahib?",
+    optionA: "1",
+    optionB: "2",
+    optionC: "3",
+    optionD: "4",
+    correctOption: "optionB"
+},
+{
+    question: "Where were the younger Sahibzade executed?",
+    optionA: "Anandpur Sahib",
+    optionB: "Delhi",
+    optionC: "Sirhind",
+    optionD: "Amritsar",
+    correctOption: "optionC"
+},
+{
+    question: "What relation was Mata Gujri Ji to the Chaar Sahibzade?",
+    optionA: "Mother",
+    optionB: "Aunt",
+    optionC: "Grandmother",
+    optionD: "Sister",
+    correctOption: "optionC"
+},
+{
+    question: "Who was the eldest Sahibzada?",
+    optionA: "Sahibzada Jujhar Singh",
+    optionB: "Sahibzada Fateh Singh",
+    optionC: "Sahibzada Zorawar Singh",
+    optionD: "Sahibzada Ajit Singh",
+    correctOption: "optionD"
+},
+{
+    question: "At what age did Sahibzada Ajit Singh achieve martyrdom?",
+    optionA: "18",
+    optionB: "15",
+    optionC: "12",
+    optionD: "20",
+    correctOption: "optionA"
+},
+{
+    question: "What was Sahibzada Jujhar Singh’s age at the time of his martyrdom?",
+    optionA: "12",
+    optionB: "14",
+    optionC: "16",
+    optionD: "18",
+    correctOption: "optionB"
+},
+{
+    question: "How did Sahibzada Jujhar Singh show bravery in Chamkaur Sahib?",
+    optionA: "He led the Mughal army.",
+    optionB: "He refused to fight.",
+    optionC: "He fought alongside his father and brother against great odds.",
+    optionD: "He surrendered to save his family.",
+    correctOption: "optionC"
+},
+{
+    question: "What did Sahibzada Ajit Singh ask Guru Gobind Singh Ji before entering battle?",
+    optionA: "Permission to retreat",
+    optionB: "Blessings to fight the enemy",
+    optionC: "Advice on negotiating peace",
+    optionD: "Weapons for self-defense",
+    correctOption: "optionB"
+},
+{
+    question: "What were the ages of Sahibzada Zorawar Singh and Sahibzada Fateh Singh at the time of their martyrdom?",
+    optionA: "12 and 10",
+    optionB: "9 and 6",
+    optionC: "15 and 13",
+    optionD: "7 and 5",
+    correctOption: "optionB"
+},
+{
+    question: "How were the younger Sahibzade captured?",
+    optionA: "They surrendered during the battle.",
+    optionB: "They were betrayed by a servant.",
+    optionC: "They got lost in the forest.",
+    optionD: "The Mughal army invaded their village.",
+    correctOption: "optionB"
+},
+{
+    question: "Who offered the younger Sahibzade wealth and power?",
+    optionA: "Guru Gobind Singh Ji",
+    optionB: "Wazir Khan",
+    optionC: "Aurangzeb",
+    optionD: "Banda Singh Bahadur",
+    correctOption: "optionB"
+},
+{
+    question: "What was the younger Sahibzade’s response to converting to Islam?",
+    optionA: "They accepted to save their lives.",
+    optionB: "They fought back physically.",
+    optionC: "They firmly refused.",
+    optionD: "They asked for more time to decide.",
+    correctOption: "optionC"
+},
+{
+    question: "What punishment was given to the younger Sahibzade?",
+    optionA: "Imprisonment for life",
+    optionB: "Bricked alive",
+    optionC: "Exile from Punjab",
+    optionD: "Execution by hanging",
+    correctOption: "optionB"
+},
+{
+    question: "What was the significance of the Battle of Chamkaur?",
+    optionA: "A peaceful negotiation with the Mughals",
+    optionB: "A great victory for the Mughal Empire",
+    optionC: "A heroic defense by Guru Gobind Singh Ji and his followers",
+    optionD: "A betrayal by the Sikh soldiers",
+    correctOption: "optionC"
+},
+{
+    question: "What was Guru Gobind Singh Ji’s strategy at Chamkaur Sahib?",
+    optionA: "To negotiate peace with the Mughals",
+    optionB: "To launch a surprise attack at night",
+    optionC: "To hold off the Mughal army with a small group of Sikhs",
+    optionD: "To retreat to a safer place",
+    correctOption: "optionC"
+},
+{
+    question: "Who led the first defense against the Mughal forces at Chamkaur Sahib?",
+    optionA: "Guru Gobind Singh Ji",
+    optionB: "Sahibzada Jujhar Singh",
+    optionC: "Sahibzada Ajit Singh",
+    optionD: "Banda Singh Bahadur",
+    correctOption: "optionC"
+},
+{
+    question: "What qualities did Sahibzada Jujhar Singh exhibit during the battle?",
+    optionA: "Cowardice",
+    optionB: "Strategic thinking and bravery",
+    optionC: "Negotiation skills",
+    optionD: "Reluctance to fight",
+    correctOption: "optionB"
+},
+{
+    question: "What message does the Battle of Chamkaur convey?",
+    optionA: "Strength lies in numbers.",
+    optionB: "Faith and courage can stand against overwhelming odds.",
+    optionC: "Diplomacy is the best solution.",
+    optionD: "Unity is more important than sacrifice.",
+    correctOption: "optionB"
+},
+{
+    question: "Who accompanied the younger Sahibzade during their imprisonment?",
+    optionA: "Guru Gobind Singh Ji",
+    optionB: "Mata Gujri Ji",
+    optionC: "Banda Singh Bahadur",
+    optionD: "Bhai Mani Singh Ji",
+    correctOption: "optionB"
+},
+{
+    question: "What was Mata Gujri Ji’s reaction to the martyrdom of the younger Sahibzade?",
+    optionA: "She passed away in grief.",
+    optionB: "She led a revolt.",
+    optionC: "She escaped imprisonment.",
+    optionD: "She wrote a letter to the emperor.",
+    correctOption: "optionA"
+},
+{
+    question: "What words did Guru Gobind Singh Ji use to describe his loss?",
+    optionA: "The world has ended for me.",
+    optionB: "Char Mooe to Kya Hua, Jeevat Kai Hazaar.",
+    optionC: "I will avenge their deaths.",
+    optionD: "This sacrifice is too great.",
+    correctOption: "optionB"
+},
+{
+    question: "What does the story of the Sahibzade teach about faith?",
+    optionA: "Faith is secondary to survival.",
+    optionB: "Faith should not involve sacrifices.",
+    optionC: "True faith requires courage and perseverance.",
+    optionD: "Faith is only for religious leaders.",
+    correctOption: "optionC"
+},
+{
+    question: "Which group of people were most inspired by the sacrifices of the Sahibzade?",
+    optionA: "Mughal soldiers",
+    optionB: "Common Sikhs and followers of Guru Gobind Singh Ji",
+    optionC: "British colonizers",
+    optionD: "Local traders",
+    correctOption: "optionB"
+}
+
+
+]
+
+
+let shuffledQuestions = [] //empty array to hold shuffled selected questions
+
+function handleQuestions() { 
+    //function to shuffle and push 10 questions to shuffledQuestions array
+    while (shuffledQuestions.length <= 9) {
+        const random = questions[Math.floor(Math.random() * questions.length)]
+        if (!shuffledQuestions.includes(random)) {
+            shuffledQuestions.push(random)
+        }
+    }
+}
+
+
+let questionNumber = 1
+let playerScore = 0  
+let wrongAttempt = 0 
+let indexNumber = 0
+
+// function for displaying next question in the array to dom
+function NextQuestion(index) {
+    handleQuestions()
+    const currentQuestion = shuffledQuestions[index]
+    document.getElementById("question-number").innerHTML = questionNumber
+    document.getElementById("player-score").innerHTML = playerScore
+    document.getElementById("display-question").innerHTML = currentQuestion.question;
+    document.getElementById("option-one-label").innerHTML = currentQuestion.optionA;
+    document.getElementById("option-two-label").innerHTML = currentQuestion.optionB;
+    document.getElementById("option-three-label").innerHTML = currentQuestion.optionC;
+    document.getElementById("option-four-label").innerHTML = currentQuestion.optionD;
+
+}
+
+
+function checkForAnswer() {
+    const currentQuestion = shuffledQuestions[indexNumber] //gets current Question 
+    const currentQuestionAnswer = currentQuestion.correctOption //gets current Question's answer
+    const options = document.getElementsByName("option"); //gets all elements in dom with name of 'option' (in this the radio inputs)
+    let correctOption = null
+
+    options.forEach((option) => {
+        if (option.value === currentQuestionAnswer) {
+            //get's correct's radio input with correct answer
+            correctOption = option.labels[0].id
+        }
+    })
+   
+    //checking to make sure a radio input has been checked or an option being chosen
+    if (options[0].checked === false && options[1].checked === false && options[2].checked === false && options[3].checked == false) {
+        document.getElementById('option-modal').style.display = "flex"
+    }
+
+    //checking if checked radio button is same as answer
+    options.forEach((option) => {
+        if (option.checked === true && option.value === currentQuestionAnswer) {
+            document.getElementById(correctOption).style.backgroundColor = "green"
+            playerScore++
+            indexNumber++
+            //set to delay question number till when next question loads
+            setTimeout(() => {
+                questionNumber++
+            }, 1000)
+        }
+
+        else if (option.checked && option.value !== currentQuestionAnswer) {
+            const wrongLabelId = option.labels[0].id
+            document.getElementById(wrongLabelId).style.backgroundColor = "red"
+            document.getElementById(correctOption).style.backgroundColor = "green"
+            wrongAttempt++
+            indexNumber++
+            //set to delay question number till when next question loads
+            setTimeout(() => {
+                questionNumber++
+            }, 1000)
+        }
+    })
+}
+
+
+
+//called when the next button is called
+function handleNextQuestion() {
+    checkForAnswer()
+    unCheckRadioButtons()
+    //delays next question displaying for a second
+    setTimeout(() => {
+        if (indexNumber <= 9) {
+            NextQuestion(indexNumber)
+        }
+        else {
+            handleEndGame()
+        }
+        resetOptionBackground()
+    }, 1000);
+}
+
+//sets options background back to null after display the right/wrong colors
+function resetOptionBackground() {
+    const options = document.getElementsByName("option");
+    options.forEach((option) => {
+        document.getElementById(option.labels[0].id).style.backgroundColor = ""
+    })
+}
+
+// unchecking all radio buttons for next question(can be done with map or foreach loop also)
+function unCheckRadioButtons() {
+    const options = document.getElementsByName("option");
+    for (let i = 0; i < options.length; i++) {
+        options[i].checked = false;
+    }
+}
+
+// function for when all questions being answered
+function handleEndGame() {
+    let remark = null
+    let remarkColor = null
+
+    // condition check for player remark and remark color
+    if (playerScore <= 3) {
+        remark = "Bad Grades, Keep Practicing."
+        remarkColor = "red"
+    }
+    else if (playerScore >= 4 && playerScore < 7) {
+        remark = "Average Grades, You can do better."
+        remarkColor = "orange"
+    }
+    else if (playerScore >= 7) {
+        remark = "Excellent, Keep the good work going."
+        remarkColor = "green"
+    }
+    const playerGrade = (playerScore / 10) * 100
+
+    //data to display to score board
+    document.getElementById('remarks').innerHTML = remark
+    document.getElementById('remarks').style.color = remarkColor
+    document.getElementById('grade-percentage').innerHTML = playerGrade
+    document.getElementById('wrong-answers').innerHTML = wrongAttempt
+    document.getElementById('right-answers').innerHTML = playerScore
+    document.getElementById('score-modal').style.display = "flex"
+
+}
+
+//closes score modal and resets game
+function closeScoreModal() {
+    questionNumber = 1
+    playerScore = 0
+    wrongAttempt = 0
+    indexNumber = 0
+    shuffledQuestions = []
+    NextQuestion(indexNumber)
+    document.getElementById('score-modal').style.display = "none"
+}
+
+//function to close warning modal
+function closeOptionModal() {
+    document.getElementById('option-modal').style.display = "none"
+}
+    </script>
+    <script src="https://kit.fontawesome.com/193dced9e7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
+</body>
+</html>
